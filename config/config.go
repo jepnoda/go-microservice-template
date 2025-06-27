@@ -16,6 +16,11 @@ type redisConfig struct {
 	DB       int
 }
 
+type httpConfig struct {
+	Port int
+	Host string
+}
+
 func LoadConfig() {
 	// Load environment variables from .env file
 	if err := godotenv.Load(); err != nil {
@@ -30,6 +35,13 @@ func GetRedisConfig() redisConfig {
 		Username: getEnv("REDIS_USERNAME", ""),
 		Password: getEnv("REDIS_PASSWORD", ""),
 		DB:       getEnvAsInt("REDIS_DB", 0),
+	}
+}
+
+func GetHttpConfig() httpConfig {
+	return httpConfig{
+		Host: getEnv("HTTP_HOST", "0.0.0.0"),
+		Port: getEnvAsInt("HTTP_PORT", 8080),
 	}
 }
 
